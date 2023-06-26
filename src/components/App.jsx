@@ -3,17 +3,32 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { AppContainer } from './App.styled';
+import { save, load } from '../utils/localStorage';
+
+const LOCALSTORAGE_KEY = 'contacts';
 
 export class App extends Component {
   state = {
     contacts: [
-      // { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      // { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      // { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      // { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
   };
+
+  componentDidMount() {
+    const data = load(LOCALSTORAGE_KEY) ?? []; //?? - оператор нулевого слияния
+    this.setState({ contacts: data });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { contacts } = this.state;
+    if (contacts !== prevState.contacts) {
+      save(LOCALSTORAGE_KEY, contacts);
+    }
+  }
 
   onSubmit = ({ name, number }) => {
     const newContact = {
