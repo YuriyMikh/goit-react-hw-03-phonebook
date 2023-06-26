@@ -3,7 +3,7 @@ import { ContactForm } from 'components/ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
 import { AppContainer } from './App.styled';
-import { save, load } from '../utils/localStorage';
+import { save, load } from '../utils/local-storage';
 
 const LOCALSTORAGE_KEY = 'contacts';
 
